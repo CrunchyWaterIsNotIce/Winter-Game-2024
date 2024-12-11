@@ -1,24 +1,15 @@
 import pygame
 
-pygame.init()
+from assets import initialize_assets, get_asset_library
 
-window = pygame.display.set_mode((1000, 1000))
-clock = pygame.time.Clock()
-
-running = True
-
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-    
-    window.fill("black")
-    
-    
-    pygame.display.flip()
-    
-
-if __name__ == "__main__":
-    print('bruh')
+class KnightGame:
+    def __init__(self, DISPLAY_SIZE, FLAGS = pygame.RESIZABLE):
         
-
+        pygame.init()
+        
+        self.window = pygame.display.set_mode(DISPLAY_SIZE, FLAGS)
+        self.clock = pygame.time.Clock()
+        self.gameloop = True
+        
+        
+          
