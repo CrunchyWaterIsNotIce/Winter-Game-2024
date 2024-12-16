@@ -1,10 +1,21 @@
-import pygame
+import pygame as pg
 
-from game import KnightGame
+from control import Control
+from program import Menu, Game, Win
 
-def initializeGame():
-    game = KnightGame((770, 770))
-    game.run()
+def main():
+    app = Control(
+        "S'Lead",
+        (770, 770),
+        )
+    app.initialize_state_machine(
+        {
+            "MENU" : Menu(),
+            "GAME" : Game(),
+            "WIN" : Win()
+        }
+    )
+    app.run()
 
 if __name__ == "__main__":
-    initializeGame()
+    main()
