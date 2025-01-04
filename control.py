@@ -31,14 +31,14 @@ class Control:
     def run(self):
         ''' Main Program Loop '''
         while self.running:
-            # print(self.clock.get_fps())
+            dt = self.clock.tick(60) / 1000 # In Seconds
             self.event_handler()
-            self.state_machine.update()
+            
+            self.state_machine.update(dt)
             
             self.screen.fill("light blue")
             self.state_machine.draw(self.screen)
             
-            self.clock.tick(60)
             pg.display.flip()
             
         pg.quit()
@@ -54,9 +54,9 @@ class State_Machine:
         except ValueError:
             print("State is invalid")
     
-    def update(self):
+    def update(self, dt):
         if self.current_state:
-            self.current_state.update()
+            self.current_state.update(dt)
     
     def draw(self, screen):
         if self.current_state:
