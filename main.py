@@ -1,7 +1,7 @@
 import pygame as pg
 
 from control import Control
-from program import Menu
+from program import Menu, Game
 
 def main():
     app = Control(
@@ -11,7 +11,7 @@ def main():
     app.initialize_state_machine(
         {
             "MENU" : Menu(),
-            # "GAME" : Game(),
+            "GAME" : Game(),
             # "WIN" : Win()
         }
     )

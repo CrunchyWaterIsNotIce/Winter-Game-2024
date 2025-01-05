@@ -51,12 +51,15 @@ class State_Machine:
     def set_state(self, state):
         try:
             self.current_state = self.states[state]
-        except ValueError:
+        except KeyError:
             print("State is invalid")
     
     def update(self, dt):
         if self.current_state:
-            self.current_state.update(dt)
+            flag = self.current_state.update(dt)
+            if flag is not None:
+                self.set_state(flag)
+            
     
     def draw(self, screen):
         if self.current_state:
