@@ -1,4 +1,5 @@
 import pygame as pg
+import os
 
 '''
     Where the majority of how the game logic and its components.
@@ -29,8 +30,8 @@ class Button(pg.sprite.Sprite):
         self.hover_done = True
         self.hover_delay = False
         
-        self.time_since_clicked = 0 # In seconds
-        self.cooldown = cooldown # In seconds
+        self.time_since_clicked = 0
+        self.cooldown = cooldown
         self.clicked = False
         
     def click(self, dt):
@@ -82,8 +83,17 @@ class Menu(pg.sprite.Group):
         
         self.button_one = Button(self, (300, 300), direction=(0, -1), speed =20, distance=10)
         self.button_two = Button(self, (400, 300), direction=(1, 0), speed=30, distance=40)
+        self.button_three = Button(self, (50, 50), pg.transform.scale_by(pg.image.load(os.path.join("assets", "blank.png")), 3).convert_alpha())
         
-        self.add(self.button_one, self.button_two)
+        self.button_four = Button(self, (146, 146), pg.transform.scale_by(pg.image.load(os.path.join("assets", "blank.png")), 3).convert_alpha())
+        self.button_five = Button(self, (242, 242), pg.transform.scale_by(pg.image.load(os.path.join("assets", "blank.png")), 3).convert_alpha())
+        self.button_six = Button(self, (338, 338), pg.transform.scale_by(pg.image.load(os.path.join("assets", "blank.png")), 3).convert_alpha())
+        
+        self.bseven = Button(self, (50 + 96 * 4, 50 + 96 * 4), pg.transform.scale_by(pg.image.load(os.path.join("assets", "blank.png")), 3).convert_alpha())
+        self.beight = Button(self, (50 + 96 * 5, 50 + 96 * 5), pg.transform.scale_by(pg.image.load(os.path.join("assets", "blank.png")), 3).convert_alpha())
+        self.bnine = Button(self, (50 + 96 * 6, 50 + 96 * 6), pg.transform.scale_by(pg.image.load(os.path.join("assets", "blank.png")), 3).convert_alpha())
+        self.bten = Button(self, (50 + 96 * 7, 50 + 96 * 7), pg.transform.scale_by(pg.image.load(os.path.join("assets", "blank.png")), 3).convert_alpha())
+        
         
     
     def update(self, dt):

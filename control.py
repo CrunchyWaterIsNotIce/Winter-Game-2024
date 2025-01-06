@@ -36,7 +36,7 @@ class Control:
             
             self.state_machine.update(dt)
             
-            self.screen.fill("light blue")
+            self.screen.fill("cyan")
             self.state_machine.draw(self.screen)
             
             pg.display.flip()
@@ -60,7 +60,6 @@ class State_Machine:
             if flag is not None:
                 self.set_state(flag)
             
-    
     def draw(self, screen):
         if self.current_state:
             self.current_state.draw(screen)
