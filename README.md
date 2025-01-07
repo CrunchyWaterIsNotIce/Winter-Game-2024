@@ -1,4 +1,4 @@
-> Winter Break 2024/Spring Semester 2025 Personal Project, Target Date to Finish -> ***May 1***
+> Winter Break 2024/Spring Semester 2025 Personal Project, Target Date to Finish -> ***May 1, 2025***
 # **S'Lead**
 
 This project delves into learning game development utilizing one of python's popular game library: *Pygame*. By using Pygame for this project, it
