@@ -1,6 +1,6 @@
 > Winter Break 2024/Spring Semester 2025 Personal Project, Target Date to Finish -> ***May 1, 2025***
 # **S'Lead**
-_"sliding down a mountain shooting ~~~snowballs~~ bullets."_
+_"sliding down a mountain shooting ~~snowballs~~ bullets."_
 
 This project delves into learning game development utilizing one of python's popular game library: *Pygame*. By using Pygame for this project, it
 allows me to experience developing a game-structure from the ground up: including the design of a program framework to tackle smooth in-game 
