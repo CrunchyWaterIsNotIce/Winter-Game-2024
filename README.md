@@ -6,4 +6,4 @@ allows me to experience developing a game-structure from the ground up: includin
 transitions (i.e., menu to game, game to end, etc.) and/or the implementation of my own animation state machine. All in all, this passion project
 will show my resolution to polishing my first ever game.
 
-### [Road Map](https://docs.google.com/document/d/1t929GFkHR-yf6FP_grDn8Gqto8mzbxaLuRaDNP7Sasw/edit?addon_store&tab=t.0)
+### [Road Map](https://docs.google.com/document/d/1t929GFkHR-yf6FP_grDn8Gqto8mzbxaLuRaDNP7Sasw/edit?usp=sharing)
