@@ -36,7 +36,7 @@ class Control:
             
             self.state_machine.update(dt)
             
-            self.screen.fill("cyan")
+            self.screen.fill("dark blue")
             self.state_machine.draw(self.screen)
             
             pg.display.flip()

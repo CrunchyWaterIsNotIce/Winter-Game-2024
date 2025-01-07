@@ -1,5 +1,5 @@
 import pygame as pg
-import os
+import os, math
 
 '''
     Where the majority of how the game logic and its components.
@@ -36,7 +36,7 @@ class Button(pg.sprite.Sprite):
         
     def click(self, dt):
         time_elapsed = pg.time.get_ticks() / 1000
-        if self.selected and (time_elapsed - self.time_since_clicked > self.cooldown) and pg.mouse.get_pressed()[0]: 
+        if self.selected and ((time_elapsed - self.time_since_clicked > self.cooldown) or self.time_since_clicked == 0) and pg.mouse.get_pressed()[0]: 
             self.time_since_clicked = time_elapsed
             self.clicked = True
         else:
@@ -75,33 +75,70 @@ class Button(pg.sprite.Sprite):
         self.selected = self.rect.collidepoint(mouse_pos)
         self.hover(dt)
         self.click(dt)
+    
+class Player(pg.sprite.Sprite):
+    def __init__(self, group, center_pos, img = None):
+        super().__init__(group)
+        if img is None:
+            self.image = pg.Surface([64, 64])
+            self.image.fill("red")
+        else:
+            self.image = img
+
+        self.rect = self.image.get_rect()
+        self.rect.center = center_pos
+        self.direction = pg.math.Vector2()
+        
+        self.moving = False
+        self.steps = 0
+    def controls(self, dt):
+        keys = pg.key.get_pressed()
+
+        self.moving = keys[pg.K_w] or keys[pg.K_a] or keys[pg.K_s] or keys[pg.K_d]
+        
+        if keys[pg.K_w]:
+            self.direction.y = -1
+        elif keys[pg.K_s]:
+            self.direction.y = 1
+        else:
+            self.direction.y = 0
+        
+        if keys[pg.K_a]:
+            self.direction.x = -1
+        elif keys[pg.K_d]:
+            self.direction.x = 1
+        else:
+            self.direction.x = 0
+
+        if self.moving and self.direction != pg.Vector2(0, 0):
+            if self.steps < math.pi / 2: # Seperate statement to avoid 1.1
+                self.steps = round(self.steps + 0.05, 2) 
+        elif self.steps > 0:
+            self.steps = round(self.steps - 0.05, 2)
+        
+        self.rect.center += self.direction * 100 * dt * math.sin(self.steps)
+        
+
+    def update(self, dt):
+        self.controls(dt)
+        print(self.moving, self.steps)
+        
         
 # Game States
 class Menu(pg.sprite.Group):
     def __init__(self):
         super().__init__()
         
-        self.button_one = Button(self, (300, 300), direction=(0, -1), speed =20, distance=10)
-        self.button_two = Button(self, (400, 300), direction=(1, 0), speed=30, distance=40)
-        self.button_three = Button(self, (50, 50), pg.transform.scale_by(pg.image.load(os.path.join("assets", "blank.png")), 3).convert_alpha())
-        
-        self.button_four = Button(self, (146, 146), pg.transform.scale_by(pg.image.load(os.path.join("assets", "blank.png")), 3).convert_alpha())
-        self.button_five = Button(self, (242, 242), pg.transform.scale_by(pg.image.load(os.path.join("assets", "blank.png")), 3).convert_alpha())
-        self.button_six = Button(self, (338, 338), pg.transform.scale_by(pg.image.load(os.path.join("assets", "blank.png")), 3).convert_alpha())
-        
-        self.bseven = Button(self, (50 + 96 * 4, 50 + 96 * 4), pg.transform.scale_by(pg.image.load(os.path.join("assets", "blank.png")), 3).convert_alpha())
-        self.beight = Button(self, (50 + 96 * 5, 50 + 96 * 5), pg.transform.scale_by(pg.image.load(os.path.join("assets", "blank.png")), 3).convert_alpha())
-        self.bnine = Button(self, (50 + 96 * 6, 50 + 96 * 6), pg.transform.scale_by(pg.image.load(os.path.join("assets", "blank.png")), 3).convert_alpha())
-        self.bten = Button(self, (50 + 96 * 7, 50 + 96 * 7), pg.transform.scale_by(pg.image.load(os.path.join("assets", "blank.png")), 3).convert_alpha())
-        
-        
+        self.play = Button(self, (385, 400), img=pg.transform.scale_by(pg.image.load(os.path.join("assets", "play_button.png")), 3), direction=(0, -1))
+        self.info = Button(self, (185, 400), img=pg.transform.scale_by(pg.image.load(os.path.join("assets", "info_button.png")), 3), direction=(0, -1))
+        self.option = Button(self, (585, 400), img=pg.transform.scale_by(pg.image.load(os.path.join("assets", "option_button.png")), 3), direction=(0, -1))
     
     def update(self, dt):
         '''Handles menu logic'''
         for button in self:
             button.update(dt)
         
-        if self.button_one.clicked:
+        if self.play.clicked:
             return "GAME"
         
         return None
@@ -110,14 +147,12 @@ class Game(pg.sprite.Group):
     def __init__(self):
         super().__init__()
         
-        self.button_one = Button(self, (300, 300), direction=(0, -1), speed =20, distance=10)
+        self.player = Player(self, (385, 385), pg.transform.scale_by(pg.image.load(os.path.join("assets", "player.png")), 3))
         
-        self.add(self.button_one)
+            
         
     def update(self, dt):
-        '''Handles menu logic'''
-        for button in self:
-            button.update(dt)
+        self.player.update(dt)
         
         return None
         
